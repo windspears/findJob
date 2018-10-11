@@ -24,6 +24,7 @@ class Solution {
 public:
     int reverse(int x) {
         //逐个取出逆转即可
+        //不需要考虑超出int范围的数，溢出直接返回0即可。
         int cnt=0;
         while(x!=0)
         {
