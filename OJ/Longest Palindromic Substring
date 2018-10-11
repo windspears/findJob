@@ -1,0 +1,107 @@
+Title:Longest Palindromic Substring
+
+Given a string s, find the longest palindromic substring in s. You may assume that the maximum length of s is 1000.
+
+Example 1:
+
+Input: "babad"
+Output: "bab"
+Note: "aba" is also a valid answer.
+Example 2:
+
+Input: "cbbd"
+Output: "bb"
+
+
+solution:
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        //针对每一个字符首先比较下一个字符，如果相等，则记录长度，并向两边同时扩展并比较；
+        //如果不相等，则以i为中心，比较i两边的字符是否相等即可
+        //比较长度，返回最大值
+        /*int len=s.size(),max=0,pos=0;
+        for(int i=0;i<len;i++)
+        {
+            int len1=0,pos1=0;
+            if(s[i]==s[i+1])
+            {
+                int left=i,right=i+1;
+                while(right<len&&(s[left]==s[right]))
+                {
+                    len1++;
+                    pos1=left;
+                    right++;
+                }
+                while(left>=0&&right<len&&(s[left]==s[right]))
+                {
+                    len1+=2;
+                    pos1=left;
+                    left--;right++;
+                }
+            }
+            else
+            {
+                int left=i-1,right=i+1;
+                len1++;
+                while(left>=0&&right<len&&(s[left]==s[right]))
+                {
+                    len1+=2;
+                    pos1=left;
+                    left--;right++;
+                }
+            }
+            if(len1>max)
+            {
+                max=len1;
+                pos=pos1;
+            }
+        }
+        return s.substr(pos,max);*/
+        int start=0,end=0;
+        if(s.size()<0) 
+            return "";
+        else
+        {
+            //int start=0,end=0;
+            for(int center=0;center<s.size();center++)
+            {
+                int len1=Palilength(center,center,s);
+                int len2=Palilength(center,center+1,s);
+                
+                if(len1>(end-start))
+                {
+                    start = center-len1/2;
+                    end   = center+len1/2;
+                }
+                if(len2>(end-start))
+                {
+                    start = center+1-len2/2;
+                    end   = center+len2/2;
+                }
+            }
+            //return s.substr(start,end-start+1);
+          }
+        return s.substr(start,end-start+1);
+    }
+    
+    
+    int Palilength(int L,int R,string s)
+    {
+        int len=0;
+        while(L>=0&&R<s.size())
+        {
+            if(s[L] == s[R])
+            {
+                len=R-L+1;
+                L--;R++;
+            }
+            else
+            {
+                break;
+            }
+            //return len;
+        }
+     return len;
+    }
+};
