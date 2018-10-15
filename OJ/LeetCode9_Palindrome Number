@@ -1,0 +1,37 @@
+LeetCode9_Palindrome Number
+
+Determine whether an integer is a palindrome. An integer is a palindrome when it reads the same backward as forward.
+
+Example 1:
+
+Input: 121
+Output: true
+Example 2:
+
+Input: -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+Example 3:
+
+Input: 10
+Output: false
+Explanation: Reads 01 from right to left.
+
+Solution:
+class Solution {
+public:
+    bool isPalindrome(int x) {
+//首先 负数和末尾为0的非零整数肯定不是回文数
+//其次 将数字转化为字符串需要额外的空间，将数字整体逆转有可能超出边界
+//在此基础上，将数字逆转一半即可，逆转后的数字比剩下的数字大即停止，此为控制条件
+        if(x<0 ||x%10 ==0&&x!=0) return false;
+        int halfNumber=0;
+        while(x>halfNumber)
+        {
+            //int a=x%10;
+            halfNumber =halfNumber*10+x%10;
+            x=x/10;
+        }
+        return x==halfNumber || x== halfNumber/10;
+    }
+};
