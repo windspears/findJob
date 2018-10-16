@@ -1,4 +1,4 @@
-Title:IntegertoRoman
+Title:IntegertoRoman and RomantoInteger
 Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
 
 Symbol       Value
@@ -115,4 +115,36 @@ public:
         }
         return res;
         }
+};
+
+
+
+
+
+
+class Solution {
+public:
+    int romanToInt(string s) {
+        //本题的意思主要是对CM,XC,IV等字符串进行特别处理
+        //CM=1000-100,CD=500-100,XC=100-10
+        //遇到此类字符串向后跳一格在减去之前的字符值即可
+        unordered_map<char,int> T={
+            {'I',1},
+            {'V',5},
+            {'X',10},
+            {'L',50},
+            {'C',100},
+            {'D',500},
+            {'M',1000},};
+        //将最后一个字符的值赋值
+        int sum=T[s.back()];
+        for(int i=s.size()-2;i>=0;--i)
+        {
+            if(T[s[i]]<T[s[i+1]])
+                sum-=T[s[i]];
+            else
+                sum+=T[s[i]];
+        }
+        return sum;
+    }
 };
