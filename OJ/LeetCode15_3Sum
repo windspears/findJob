@@ -1,0 +1,96 @@
+title:
+3Sum
+Given an array nums of n integers, are there elements a, b, c in nums such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+Note:
+
+The solution set must not contain duplicate triplets.
+
+Example:
+
+Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
+
+
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+//思路：确定一个数下标为i，然后用两个下标指针分别从首尾遍历，寻找适合的数值，头是i+1;
+//第一个是我的解法，虽然能够得到答案，但是在去重方面存在问题
+//本题注意点
+//1.不符合要求的返回的类型要注意，直接返回{}即可
+//2.首尾移动的条件
+//3.去重条件的设置
+        /*if(nums.size()<3)return {};
+        int i, j, k, sum, cnt = 0;
+		vector<vector<int>> res;
+		sort(nums.begin(), nums.end());
+		i = 0;
+		j = nums.size() - 1;
+		while (i<j)
+		{
+			sum = nums[i] + nums[j];
+			
+				for (k = i; k < j; k++)
+				{
+					if (sum + nums[k] == 0)
+					{
+						vector<int> temp(3, 0);
+						temp[0] = nums[i];
+						temp[1] = nums[k];
+						temp[2] = nums[j];
+						res.push_back(temp);
+						while (i < j&&nums[i] == temp[1]) i++;
+						while (i < j&&nums[j] == temp[2]) j--;
+					}
+					//res.push_back(temp);
+				}
+			
+			while (i + 1 < nums.size() && nums[i + 1] == nums[i])
+				i++;
+			if (sum + nums[k] <= 0)
+				i++;
+			if (sum + nums[k] > 0)
+				j--;
+		}
+		return res;*/
+        if (nums.size() < 3) return{};
+		vector<vector<int>> res;
+		sort(nums.begin(), nums.end());
+		
+		for (int i = 0; i < nums.size();)
+		{
+			int start = i + 1,end = nums.size() - 1;
+			while (start < end)
+			{
+				if (nums[i] + nums[start] + nums[end] == 0)
+				{
+					res.push_back({ nums[i], nums[start], nums[end] });
+					start++; end--;
+					while (start < end&&nums[start] == nums[start-1]) start++;
+					while (start < end &&nums[end] == nums[end+1]) end--;
+				}
+				else if (nums[i] + nums[start] + nums[end] < 0)
+				{
+					start++;
+					while (start < end&&nums[start] == nums[start - 1]) start++;
+				}
+				else
+				{
+					end--;
+					while (start < end &&nums[end] == nums[end + 1]) end--;
+				}
+			}
+			i++;
+			while ((i < nums.size())&& nums[i] == nums[i-1]) 
+				i++;
+		}
+		return res;
+    }
+};
