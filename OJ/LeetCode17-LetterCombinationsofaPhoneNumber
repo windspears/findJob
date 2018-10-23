@@ -10,6 +10,7 @@ Solution:
 class Solution {
 public:
     vector<string> letterCombinations(string digits) {
+    //针对每个字母，将每个字母对应的组合在已有的字符串中重新组合即可
         if(digits.size()<1) return {};
         vector<string> words={"0","1","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
         vector<string> res;
