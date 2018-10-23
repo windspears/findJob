@@ -1,0 +1,52 @@
+title:ValidParentheses
+//符号匹配问题
+Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Note that an empty string is also considered valid.
+
+Example 1:
+
+Input: "()"
+Output: true
+Example 2:
+
+Input: "()[]{}"
+Output: true
+Example 3:
+
+Input: "(]"
+Output: false
+Example 4:
+
+Input: "([)]"
+Output: false
+Example 5:
+
+Input: "{[]}"
+Output: true
+class Solution {
+public:
+    bool isValid(string s) {
+        //利用栈进行操作，遇到左括号的全部入栈，遇到右括号的字符，即要出栈，和栈顶的元素是否匹配，不匹配则失败，匹配则将元素出栈即可。
+        stack<char> s1;
+        for(auto c:s)
+        {
+            if(c == '('|| c == '{'|| c == '[')
+                s1.push(c);
+            else
+            {
+                if(s1.empty()) return false;
+                if(c == ')' && s1.top() != '(') return false;
+                if(c == '}' && s1.top() != '{') return false;
+                if(c == ']' && s1.top() != '[') return false;
+                s1.pop();
+            }
+        }
+        return s1.empty();
+        
+    }
+};
