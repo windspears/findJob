@@ -1,0 +1,36 @@
+title:Generate Parentheses
+Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+For example, given n = 3, a solution set is:
+
+[
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
+
+
+
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> res;
+        backtrack(res,"",n,0);
+        return res;
+    }
+    void backtrack(vector<string> &res,string cur,int left,int right){
+        //产生所有括号排序的可能
+        //DFS解决，先确定左括号，在做括号达到最大值时，在分支上添加右括号
+        if(left==0 && right==0)
+        {    
+            res.push_back(cur);
+            return;
+        }
+        if(left  > 0)
+            backtrack(res,cur+'(',left-1,right+1);
+        if(right > 0)
+            backtrack(res,cur+')',left,right-1);
+    }
+};
