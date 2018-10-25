@@ -1,0 +1,57 @@
+title:Swap Nodes in Pairs
+LeetCode23-SwapNodesinPairs
+Given a linked list, swap every two adjacent nodes and return its head.
+
+Example:
+
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+Note:
+
+Your algorithm should use only constant extra space.
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* swapPairs(ListNode* head) {
+        //每两个元素逆转一次，这里使用了递归
+        /*
+        if(head == NULL) return NULL;
+        if(head->next == NULL) return head;
+        ListNode* p = head->next;
+        head->next = swapPairs(p->next);
+        p->next = head;
+        return p;*/
+        if(head==nullptr || head->next==nullptr )return head;
+        ListNode* p;
+        ListNode* a=head;
+        ListNode* b=head->next;
+        
+        p=a;
+        head = b;
+        a->next = b->next;
+        b->next = a;
+        a=a->next;
+        if(a!= nullptr)
+            b = a->next;
+        while(a!=nullptr && a->next!=nullptr){
+            p->next=b;
+            a->next=b->next;
+            b->next=a;
+            p=a;
+            
+            a = a->next;
+            if(a!=nullptr)
+                b = a->next;
+        }
+        return head;
+    }
+};
